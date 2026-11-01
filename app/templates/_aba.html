@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block conteudo %}
+<header class="cabecalho-aba">
+  <h1>{{ aba }}</h1>
+  <nav class="opcoes" aria-label="Opções da aba">
+    {% for endpoint, rotulo in opcoes %}
+      <a href="{{ url_for(endpoint) }}" {% if (ativo or request.endpoint) == endpoint %}aria-current="page"{% endif %}>{{ rotulo }}</a>
+    {% endfor %}
+  </nav>
+</header>
+{% block pagina %}{% endblock %}
+{% endblock %}

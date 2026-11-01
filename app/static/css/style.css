@@ -1,0 +1,81 @@
+/* Ficha de Academia: estilos base. */
+:root {
+  --fundo: #EEF0F3;
+  --superficie: #FFFFFF;
+  --superficie-2: #F5F6F8;
+  --texto: #151A24;
+  --texto-suave: #5C6576;
+  --borda: #D8DCE3;
+  --destaque: #2B45C9;
+  --destaque-claro: #E2E7FB;
+  --sucesso: #1D7F53;
+  --alerta: #B8430F;
+  --erro: #B42318;
+  --fonte: 'Barlow', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --fonte-titulo: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  --raio: 14px;
+}
+
+* { box-sizing: border-box; }
+html { height: 100%; }
+body { margin: 0; min-height: 100%; background: var(--fundo); color: var(--texto); font: 16px/1.5 var(--fonte); }
+h1, h2, h3 { font-family: var(--fonte-titulo); font-weight: 700; line-height: 1.1; margin: 0; }
+a { color: var(--destaque); }
+:focus-visible { outline: 2px solid var(--destaque); outline-offset: 2px; }
+code { font-size: .9em; background: var(--superficie-2); border: 1px solid var(--borda); border-radius: 6px; padding: 1px 6px; }
+
+/* ---------- Topo e abas ---------- */
+.topo { max-width: 960px; margin: 0 auto; padding: 14px 16px; display: flex; align-items: center; gap: 20px; }
+.marca { display: flex; align-items: center; gap: 8px; font-family: var(--fonte-titulo); font-weight: 700; font-size: 1.9rem; color: var(--texto); text-decoration: none; }
+.marca img { width: 26px; height: 26px; }
+.abas { display: flex; gap: 4px; }
+.abas a { padding: 8px 14px; border-radius: 999px; font-weight: 600; color: var(--texto-suave); text-decoration: none; }
+.abas a:hover { color: var(--texto); }
+.abas a[aria-current="page"] { background: var(--destaque-claro); color: var(--destaque); }
+.conta { margin-left: auto; display: flex; gap: 12px; align-items: center; font-size: .92rem; color: var(--texto-suave); }
+
+@media (max-width: 700px) {
+  .abas { position: fixed; left: 0; right: 0; bottom: 0; z-index: 10; background: var(--superficie); border-top: 1px solid var(--borda);
+          justify-content: space-around; padding: 6px 4px calc(6px + env(safe-area-inset-bottom, 0px)); }
+  .abas a { font-size: .9rem; padding: 8px 10px; }
+  .conteudo { padding-bottom: 88px; }
+}
+
+/* ---------- Conteúdo ---------- */
+.conteudo { max-width: 960px; margin: 0 auto; padding: 8px 16px 48px; }
+.cabecalho-aba { margin: 10px 0 18px; }
+.cabecalho-aba h1 { font-size: clamp(2.4rem, 7vw, 3.4rem); letter-spacing: -.01em; }
+.cabecalho-aba p { margin: 6px 0 0; color: var(--texto-suave); max-width: 60ch; }
+.opcoes { display: flex; gap: 6px; overflow-x: auto; margin-top: 14px; padding-bottom: 4px; }
+.opcoes a { flex: none; padding: 7px 14px; border-radius: 999px; border: 1px solid var(--borda); background: var(--superficie); color: var(--texto-suave); font-weight: 600; font-size: .92rem; text-decoration: none; }
+.opcoes a[aria-current="page"] { background: var(--texto); border-color: var(--texto); color: var(--superficie); }
+.pagina-topo { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin: 8px 0 16px; }
+.pagina-topo h2 { font-size: 1.6rem; }
+.voltar { display: inline-block; margin-top: 4px; font-weight: 600; text-decoration: none; }
+.cartao { background: var(--superficie); border: 1px solid var(--borda); border-radius: var(--raio); padding: 20px; margin-bottom: 14px; }
+
+/* ---------- Formulários e botões ---------- */
+label { display: flex; flex-direction: column; gap: 4px; font-size: .88rem; font-weight: 500; color: var(--texto-suave); margin-bottom: 12px; }
+label.check { flex-direction: row; align-items: center; gap: 8px; }
+input, select, textarea { font: inherit; font-size: 1rem; color: var(--texto); padding: 11px 12px; border: 1px solid var(--borda); border-radius: 9px; background: var(--superficie-2); width: 100%; }
+input[type="checkbox"] { width: auto; }
+input:focus, select:focus, textarea:focus { outline: none; border-color: var(--destaque); box-shadow: 0 0 0 3px var(--destaque-claro); }
+.botao { display: inline-block; font: 600 1rem var(--fonte); padding: 11px 18px; border-radius: 10px; border: 1px solid var(--borda); background: var(--superficie); color: var(--texto); cursor: pointer; text-decoration: none; }
+.botao.principal { background: var(--destaque); border-color: var(--destaque); color: #fff; }
+.botao.principal:hover { filter: brightness(1.07); }
+
+/* ---------- Avisos (flash) ---------- */
+.aviso { padding: 10px 14px; border-radius: 10px; margin: 8px 0 14px; font-weight: 500; }
+.aviso-erro { background: #FDECEA; color: var(--erro); }
+.aviso-ok { background: #E6F4EC; color: var(--sucesso); }
+
+/* ---------- Login e cadastro ---------- */
+.acesso { max-width: 420px; margin: 0 auto; padding: 0 0 40px; }
+.acesso-capa { background: var(--destaque); color: #fff; padding: 64px 24px 44px; border-radius: 0 0 22px 22px; }
+.acesso-capa h1 { font-size: 4.2rem; line-height: .9; }
+.acesso-capa p { margin: 10px 0 0; opacity: .9; max-width: 28ch; }
+.acesso-form { margin: -20px 16px 0; position: relative; }
+.acesso-form h2 { font-size: 1.8rem; margin-bottom: 14px; }
+.acesso-form .botao { width: 100%; margin-top: 4px; }
+.rodape-form { text-align: center; color: var(--texto-suave); margin: 16px 0 0; }
+.acesso .aviso { margin: 12px 16px 0; }

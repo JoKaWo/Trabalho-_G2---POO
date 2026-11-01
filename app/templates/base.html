@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block titulo %}Ficha de Academia{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  {% block head %}{% endblock %}
+</head>
+<body>
+  {% if current_user.is_authenticated %}
+  <header class="topo">
+    <a class="marca" href="{{ url_for('main.inicio') }}">
+      <img src="{{ url_for('static', filename='img/logo.svg') }}" alt="" width="26" height="26">
+      Ficha
+    </a>
+    <nav class="abas" aria-label="Abas do aplicativo">
+      {% set abas = [('treino.index', 'Treino'), ('evolucao.index', 'Evolução'), ('peso.index', 'Peso'), ('nutricao.index', 'Nutrição')] %}
+      {% for endpoint, rotulo in abas %}
+        <a href="{{ url_for(endpoint) }}" {% if request.blueprint == endpoint.split('.')[0] %}aria-current="page"{% endif %}>{{ rotulo }}</a>
+      {% endfor %}
+    </nav>
+    <div class="conta">
+      <span>{{ current_user.nome.split()[0] }}</span>
+      <a href="{{ url_for('auth.logout') }}">Sair</a>
+    </div>
+  </header>
+  {% endif %}
+
+  <main class="{% block classe_main %}conteudo{% endblock %}">
+    {% with mensagens = get_flashed_messages(with_categories=true) %}
+      {% for categoria, mensagem in mensagens %}
+        <p class="aviso aviso-{{ categoria }}" role="status">{{ mensagem }}</p>
+      {% endfor %}
+    {% endwith %}
+    {% block conteudo %}{% endblock %}
+  </main>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

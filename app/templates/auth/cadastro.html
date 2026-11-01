@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block titulo %}Criar conta · Ficha de Academia{% endblock %}
+{% block classe_main %}acesso{% endblock %}
+{% block conteudo %}
+<section class="acesso-capa">
+  <h1>Ficha</h1>
+  <p>Crie sua conta para registrar treinos, peso e refeições.</p>
+</section>
+<form class="cartao acesso-form" method="post">
+  <h2>Criar conta</h2>
+  <label>Nome<input name="nome" required autocomplete="name" autofocus></label>
+  <label>E-mail<input type="email" name="email" required autocomplete="email"></label>
+  <label>Senha<input type="password" name="senha" required minlength="6" autocomplete="new-password"></label>
+  <button class="botao principal" type="submit">Criar conta</button>
+  <p class="rodape-form">Já tem conta? <a href="{{ url_for('auth.login') }}">Entrar</a></p>
+</form>
+{% endblock %}

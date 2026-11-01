@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block titulo %}Entrar · Ficha de Academia{% endblock %}
+{% block classe_main %}acesso{% endblock %}
+{% block conteudo %}
+<section class="acesso-capa">
+  <h1>Ficha</h1>
+  <p>Seu treino, sua carga, seu peso e sua dieta no mesmo lugar.</p>
+</section>
+<form class="cartao acesso-form" method="post">
+  <h2>Entrar</h2>
+  <label>E-mail<input type="email" name="email" required autocomplete="email" autofocus></label>
+  <label>Senha<input type="password" name="senha" required autocomplete="current-password"></label>
+  <label class="check"><input type="checkbox" name="lembrar"> Manter conectado</label>
+  <button class="botao principal" type="submit">Entrar</button>
+  <p class="rodape-form">Ainda não tem conta? <a href="{{ url_for('auth.cadastro') }}">Criar conta</a></p>
+</form>
+{% endblock %}
