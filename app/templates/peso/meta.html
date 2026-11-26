@@ -4,4 +4,60 @@
 <div class="pagina-topo">
   <h2>Peso e meta</h2>
 </div>
+
+<section class="cartao">
+  {% if analise.tem_registros %}
+    <p class="destaque-numero">{{ analise.peso_atual|numero(1) }}<small> kg em {{ analise.data_atual.strftime('%d/%m/%Y') }}</small></p>
+  {% else %}
+    <p class="destaque-numero">–<small> kg</small></p>
+    <p class="texto-suave">Você ainda não registrou nenhuma pesagem.</p>
+  {% endif %}
+
+  {% if meta %}
+    <p>Meta: <strong>{{ meta.peso_meta_kg|numero(1) }} kg</strong> até {{ meta.data_limite.strftime('%d/%m/%Y') }}</p>
+    {% set texto, situacao = analise.mensagem_projecao(meta) %}
+    <p class="texto-{{ situacao }}">{{ texto }}</p>
+    <p class="texto-suave">
+      Ritmo atual: {{ analise.ritmo_semanal()|numero(2, true) }} kg por semana ·
+      Ritmo necessário: {{ analise.ritmo_necessario(meta)|numero(2, true) }} kg por semana
+    </p>
+  {% elif analise.tem_registros %}
+    <p class="texto-suave">Defina uma meta abaixo para ver a projeção.</p>
+  {% endif %}
+</section>
+
+<form class="cartao" method="post" action="{{ url_for('peso.registrar') }}">
+  <h3>Registrar peso</h3>
+  <div class="campos-lado-a-lado">
+    <label>Data
+      <input type="date" name="data" value="{{ hoje.isoformat() }}" max="{{ hoje.isoformat() }}" required>
+    </label>
+    <label>Peso (kg)
+      <input type="text" name="peso" inputmode="decimal" placeholder="Ex.: 90,4" required>
+    </label>
+  </div>
+  <button class="botao principal" type="submit">Registrar</button>
+  <p class="texto-suave dica">Pese-se de manhã, em jejum e depois de ir ao banheiro. Se você registrar duas vezes no mesmo dia, vale a última.</p>
+</form>
+
+<form class="cartao" method="post" action="{{ url_for('peso.salvar_meta') }}">
+  <h3>Fase e meta</h3>
+  <label>Fase atual
+    <select name="fase">
+      {% for chave, nome in fases.items() %}
+        <option value="{{ chave }}" {% if current_user.fase == chave %}selected{% endif %}>{{ nome }}</option>
+      {% endfor %}
+    </select>
+  </label>
+  <div class="campos-lado-a-lado">
+    <label>Peso meta (kg)
+      <input type="text" name="peso_meta" inputmode="decimal" placeholder="Ex.: 80"
+             value="{{ meta.peso_meta_kg|numero(1) if meta else '' }}">
+    </label>
+    <label>Até quando
+      <input type="date" name="data_limite" value="{{ meta.data_limite.isoformat() if meta else '' }}">
+    </label>
+  </div>
+  <button class="botao principal" type="submit">Salvar fase e meta</button>
+</form>
 {% endblock %}

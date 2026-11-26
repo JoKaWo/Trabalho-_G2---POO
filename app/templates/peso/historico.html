@@ -4,4 +4,63 @@
 <div class="pagina-topo">
   <h2>Histórico de peso</h2>
 </div>
+
+{% if not analise.tem_registros %}
+  <section class="cartao">
+    <p class="texto-suave">Nenhuma pesagem ainda. Registre seu primeiro peso na aba <a href="{{ url_for('peso.index') }}">Meta</a>.</p>
+  </section>
+{% else %}
+  <div class="grade-resumo">
+    <div class="numero-card">
+      <strong>{{ analise.media_ultimos_dias(7)|numero(1) }} kg</strong>
+      <span>média dos últimos 7 dias</span>
+    </div>
+    <div class="numero-card">
+      <strong>{{ analise.variacao_total()|numero(1, true) }} kg</strong>
+      <span>desde a primeira pesagem</span>
+    </div>
+    <div class="numero-card">
+      <strong>{{ analise.ritmo_semanal()|numero(2, true) }} kg</strong>
+      <span>ritmo por semana (últimos 28 dias)</span>
+    </div>
+  </div>
+
+  <section class="cartao">
+    {% if analise.registros|length >= 2 %}
+      <svg class="grafico" viewBox="0 0 {{ grafico.LARGURA }} {{ grafico.ALTURA }}" role="img" aria-label="Gráfico do peso ao longo do tempo">
+        <line class="grafico-eixo" x1="{{ grafico.ESQUERDA }}" y1="{{ grafico.TOPO }}" x2="{{ grafico.ESQUERDA }}" y2="{{ grafico.base_y }}"/>
+        <line class="grafico-eixo" x1="{{ grafico.ESQUERDA }}" y1="{{ grafico.base_y }}" x2="{{ grafico.LARGURA - grafico.DIREITA }}" y2="{{ grafico.base_y }}"/>
+        <text class="grafico-texto" x="{{ grafico.ESQUERDA - 6 }}" y="{{ grafico.TOPO + 4 }}" text-anchor="end">{{ grafico.maximo }}</text>
+        <text class="grafico-texto" x="{{ grafico.ESQUERDA - 6 }}" y="{{ grafico.base_y }}" text-anchor="end">{{ grafico.minimo }}</text>
+        <text class="grafico-texto" x="{{ grafico.ESQUERDA }}" y="{{ grafico.ALTURA - 8 }}" text-anchor="start">{{ grafico.data_inicio }}</text>
+        <text class="grafico-texto" x="{{ grafico.LARGURA - grafico.DIREITA }}" y="{{ grafico.ALTURA - 8 }}" text-anchor="end">{{ grafico.data_fim }}</text>
+        {% if grafico.y_meta is not none %}
+          <line class="grafico-meta" x1="{{ grafico.ESQUERDA }}" y1="{{ grafico.y_meta }}" x2="{{ grafico.LARGURA - grafico.DIREITA }}" y2="{{ grafico.y_meta }}"/>
+          <text class="grafico-texto grafico-texto-meta" x="{{ grafico.LARGURA - grafico.DIREITA }}" y="{{ grafico.y_meta - 6 }}" text-anchor="end">meta</text>
+        {% endif %}
+        <polyline class="grafico-linha" points="{{ grafico.linha }}"/>
+        {% for ponto in grafico.pontos %}
+          <circle class="grafico-ponto" cx="{{ ponto.x }}" cy="{{ ponto.y }}" r="4"><title>{{ ponto.dica }}</title></circle>
+        {% endfor %}
+      </svg>
+    {% else %}
+      <p class="texto-suave">Registre pelo menos 2 pesagens para ver o gráfico.</p>
+    {% endif %}
+  </section>
+
+  <section class="cartao">
+    <ul class="lista-peso">
+      {% for registro, variacao in analise.linhas_do_historico() %}
+        <li>
+          <span class="data">{{ registro.data.strftime('%d/%m/%Y') }}</span>
+          <span class="peso">{{ registro.peso_kg|numero(1) }} kg</span>
+          <span class="variacao">{{ variacao|numero(1, true) if variacao is not none else '' }}</span>
+          <form method="post" action="{{ url_for('peso.excluir', registro_id=registro.id) }}">
+            <button class="botao pequeno" type="submit" aria-label="Excluir pesagem de {{ registro.data.strftime('%d/%m/%Y') }}">Excluir</button>
+          </form>
+        </li>
+      {% endfor %}
+    </ul>
+  </section>
+{% endif %}
 {% endblock %}

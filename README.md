@@ -27,7 +27,8 @@ Para começar do zero, apague esse arquivo.
 ## O que já tem
 
 - Cadastro, login e logout
-- Layout com as abas Treino, Evolução, Peso e Nutrição (ainda vazias)
+- Layout com as abas Treino, Evolução, Peso e Nutrição
+- Aba Peso funcionando: registrar peso, fase e meta, projeção da meta e histórico com gráfico (as outras abas ainda estão vazias)
 - As classes do banco em `app/models/`, seguindo o DER do trabalho
 - Testes básicos em `tests/` (rode com `pytest`)
 

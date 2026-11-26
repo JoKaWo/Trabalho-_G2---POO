@@ -79,3 +79,34 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--d
 .acesso-form .botao { width: 100%; margin-top: 4px; }
 .rodape-form { text-align: center; color: var(--texto-suave); margin: 16px 0 0; }
 .acesso .aviso { margin: 12px 16px 0; }
+
+/* ---------- Aba Peso ---------- */
+.cartao h3 { font-size: 1.35rem; margin-bottom: 12px; }
+.destaque-numero { font-family: var(--fonte-titulo); font-weight: 700; font-size: 3.4rem; line-height: 1; margin: 0 0 8px; }
+.destaque-numero small { font-family: var(--fonte); font-size: 1rem; font-weight: 600; color: var(--texto-suave); }
+.texto-suave, .texto-neutro { color: var(--texto-suave); }
+.texto-bom { color: var(--sucesso); font-weight: 600; }
+.texto-alerta { color: var(--alerta); font-weight: 600; }
+.dica { font-size: .88rem; margin: 12px 0 0; }
+.campos-lado-a-lado { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.grade-resumo { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; margin-bottom: 14px; }
+.numero-card { background: var(--superficie); border: 1px solid var(--borda); border-radius: var(--raio); padding: 14px 16px; }
+.numero-card strong { display: block; font-family: var(--fonte-titulo); font-size: 1.9rem; line-height: 1.1; }
+.numero-card span { font-size: .85rem; color: var(--texto-suave); }
+.lista-peso { list-style: none; margin: 0; padding: 0; }
+.lista-peso li { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-top: 1px solid var(--borda); }
+.lista-peso li:first-child { border-top: 0; }
+.lista-peso form { margin: 0; }
+.lista-peso .data { flex: 1; color: var(--texto-suave); }
+.lista-peso .peso { font-weight: 600; }
+.lista-peso .variacao { width: 64px; text-align: right; font-size: .92rem; color: var(--texto-suave); }
+.botao.pequeno { padding: 5px 10px; font-size: .85rem; }
+
+/* Gráfico de linha em SVG */
+.grafico { display: block; width: 100%; height: auto; }
+.grafico-eixo { stroke: var(--borda); stroke-width: 1; }
+.grafico-linha { fill: none; stroke: var(--destaque); stroke-width: 2.5; stroke-linejoin: round; }
+.grafico-ponto { fill: var(--destaque); }
+.grafico-meta { stroke: var(--sucesso); stroke-width: 1.5; stroke-dasharray: 6 5; }
+.grafico-texto { font-size: 12px; fill: var(--texto-suave); }
+.grafico-texto-meta { fill: var(--sucesso); font-weight: 600; }
